@@ -25,13 +25,14 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           java-version: "12.x"
-      - name: Flutter action for project setup
-        uses: subosito/flutter-action@v1.3.2
+      - uses: subosito/flutter-action@v1.3.2
         with:
           # The Flutter version to make available on the path
           flutter-version: 1.17.2 # optional
           # The Flutter build release channel
           channel: stable # optional, default is stable
+
+      - name: Flutter action for project setup
         run: |
           cd $GITHUB_WORKSPACE/org.floraprobe
           flutter doctor -v
