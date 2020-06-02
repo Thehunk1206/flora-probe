@@ -6,9 +6,9 @@ name: CI Master
 # events but only for the master branch
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -32,13 +32,13 @@ jobs:
           # The Flutter build release channel
           channel: stable # optional, default is stable
 
-      - name: Flutter actions
+      - name: Flutter pedantic actions
         run: |
           cd $GITHUB_WORKSPACE/org.floraprobe
           flutter doctor -v
-        echo: Installing dependencies
-        run: flutter pub get
-        echo: Checking for formatting issues
-        run: flutter format --set-exit-if-changed .
-        echo: Analyzing for issues
-        run: flutter analyze .
+          echo "Installing dependencies"
+          flutter pub get
+          echo "Checking for formatting issues"
+          flutter format --set-exit-if-changed .
+          echo "Analyzing for issues"
+          flutter analyze .
