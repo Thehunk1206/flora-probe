@@ -3,9 +3,7 @@ import 'dart:ui';
 import 'package:floraprobe/src/commons/assets.dart';
 import 'package:floraprobe/src/commons/string_const.dart';
 import 'package:floraprobe/src/commons/styles.dart';
-import 'package:floraprobe/src/provider/home.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 /// A reusable, modal dialog
 class ResultsDialog {

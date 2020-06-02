@@ -1,5 +1,12 @@
 # Changelog
 
+## Upcoming
+
+- Smaller app size
+- Performance improvements
+- Compressed images
+- Complete options
+
 ## 0.0.2-beta+0602
 
 - Included bouncy animations
