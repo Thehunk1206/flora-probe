@@ -32,16 +32,13 @@ jobs:
           # The Flutter build release channel
           channel: stable # optional, default is stable
 
-      - name: Flutter action for project setup
+      - name: Flutter actions
         run: |
           cd $GITHUB_WORKSPACE/org.floraprobe
           flutter doctor -v
-
-      - name: Installing dependencies
+        echo: Installing dependencies
         run: flutter pub get
-
-      - name: Checking for formatting issues
+        echo: Checking for formatting issues
         run: flutter format --set-exit-if-changed .
-
-      - name: Analyzing for issues
+        echo: Analyzing for issues
         run: flutter analyze .

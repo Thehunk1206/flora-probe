@@ -19,38 +19,36 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Setup environment
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-      # Setup Java environment in order to build the Android app.
-      - uses: actions/setup-java@v1
+        # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+        uses: actions/checkout@v2
+        # Setup Java environment in order to build the Android app.
+        uses: actions/setup-java@v1
         with:
           java-version: "12.x"
-      - uses: subosito/flutter-action@v1.3.2
+        uses: subosito/flutter-action@v1.3.2
         with:
           # The Flutter version to make available on the path
           flutter-version: 1.17.2 # optional
           # The Flutter build release channel
           channel: stable # optional, default is stable
 
-      - name: Flutter action for project setup
+      - name: Flutter actions
         run: |
           cd $GITHUB_WORKSPACE/org.floraprobe
           flutter doctor -v
-
-      - name: Installing dependencies
+        echo: Installing dependencies
         run: flutter pub get
-
-      - name: Checking for formatting issues
+        echo: Checking for formatting issues
         run: flutter format --set-exit-if-changed .
-
-      - name: Analyzing for issues
+        echo: Analyzing for issues
         run: flutter analyze .
 
       - name: Build APKs
+        run: cd $GITHUB_WORKSPACE/org.floraprobe
         # https://developer.android.com/studio/build/configure-apk-splits#configure-abi-split
         run: flutter build apk --release --split-per-abi
 
-      - name: Upload artifact megazip
+        echo: Upload artifact megazip
         uses: actions/upload-artifact@v1.0.0
         with:
           # Artifact name
@@ -65,8 +63,8 @@ jobs:
           body_path: $GITHUB_WORKSPACE/RELEASE_NOTES.md
           name: "Pre-release"
           files: |
-            build/app/outputs/apk/release/app-arm64-v8a-release.apk
-            build/app/outputs/apk/release/app-armeabi-v7a-release.apk
-            build/app/outputs/apk/release/app-x86_64-release.apk
+            $GITHUB_WORKSPACE/org.floraprobe/build/app/outputs/apk/release/app-arm64-v8a-release.apk
+            $GITHUB_WORKSPACE/org.floraprobe/build/app/outputs/apk/release/app-armeabi-v7a-release.apk
+            $GITHUB_WORKSPACE/org.floraprobe/build/app/outputs/apk/release/app-x86_64-release.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
