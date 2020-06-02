@@ -3,31 +3,38 @@ import 'dart:typed_data';
 
 import 'package:camera/camera.dart';
 import 'package:floraprobe/src/commons/assets.dart';
-import 'package:floraprobe/src/ui/components/dialog.dart';
+import 'package:floraprobe/src/ui/components/loading_dialog.dart';
 import 'package:floraprobe/src/utils/probe.dart';
 import 'package:flutter/widgets.dart';
 
-enum ScanState { idle, running, completed }
+enum ScanState {
+  ready,
+  initializing,
+  running,
+  completed,
+}
 
 class HomeProvider extends ChangeNotifier {
   CameraDescription _firstCamera;
-  Uint8List _bytesOfLatestSnappedImage;
   ImageProvider _latestSnappedImage;
   String _pathOfLatestSnappedImage;
 
   ImageProvider get latestSnappedImage => _latestSnappedImage;
   String get pathOfLatestSnappedImage => _pathOfLatestSnappedImage;
-  Uint8List get bytesOfLatestSnappedImage => _bytesOfLatestSnappedImage;
 
-  ScanState _state = ScanState.idle;
+  ScanState _state = ScanState.ready;
 
   ScanState get state => _state;
-  double _aspectRatio = 16 / 9;
+  double _aspectRatio = 2 / 3;
 
-  double get aspectRatio => _aspectRatio ?? 16 / 9;
+  double get aspectRatio => _aspectRatio ?? 2 / 3;
 
   setAspectRatio(double aspectRatio) {
-    _aspectRatio = aspectRatio;
+    if (_aspectRatio != aspectRatio) {
+      _aspectRatio = aspectRatio;
+      print("Aspect ratio changed");
+      notifyListeners();
+    }
   }
 
   /// Set scan state
@@ -42,10 +49,8 @@ class HomeProvider extends ChangeNotifier {
       BuildContext context,
       Loading loading) async {
     // Starting theatrics
-    setAspectRatio(controller?.value?.aspectRatio);
     try {
       final File _imageFile = File(imagePath);
-      _bytesOfLatestSnappedImage = _imageFile.readAsBytesSync();
       _latestSnappedImage = FileImage(
         _imageFile,
       );
@@ -54,16 +59,16 @@ class HomeProvider extends ChangeNotifier {
     } catch (e) {
       print(e);
       // Dismissing dialog on error
-      loading.dismiss();
-      setScanState(ScanState.idle);
+      loading.hide();
+      setScanState(ScanState.ready);
       return null;
     }
-    notifyListeners();
+
     // Runs Model
     List results = await Probe().runOnImage(imagePath);
-    // setScanState(ScanState.completed); // TODO: always show preview before idle. hint => Stay completed
-    loading.dismiss();
-    setScanState(ScanState.idle);
+    loading.hide();
+    setScanState(ScanState
+        .completed); // TODO: always show preview before idle. hint => Stay completed
     return results;
   }
 

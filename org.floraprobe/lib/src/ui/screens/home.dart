@@ -1,36 +1,32 @@
 import 'dart:ui';
 
 import 'package:floraprobe/src/commons/assets.dart';
+import 'package:floraprobe/src/commons/string_const.dart';
+import 'package:floraprobe/src/commons/styles.dart';
 import 'package:floraprobe/src/provider/home.dart';
 import 'package:floraprobe/src/ui/components/bottomBar.dart';
 import 'package:floraprobe/src/ui/components/scannerSVG.dart';
 import 'package:floraprobe/src/ui/components/viewport.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:provider/provider.dart';
 
 /// The main app screen of flora probe
 class HomeScreen extends StatelessWidget {
-  final String title;
-
   HomeScreen({
     Key key,
-    this.title,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     const double _size = 40;
     Text _appbarTitle = Text(
-      title,
-      style: GoogleFonts.dancingScript(
-        fontSize: _size,
-        fontWeight: FontWeight.w900,
-      ),
-      textAlign: TextAlign.left,
+      Strings.title,
+      style: TextStyles.appbarTitle,
     );
+
     IconButton _searchButton = IconButton(
       icon: Icon(
         EvaIcons.search,
@@ -42,68 +38,92 @@ class HomeScreen extends StatelessWidget {
     );
     Widget _cameraViewport = CameraViewport();
 
+    // TODO: Bounce effect when CameraView is tapped
     /// This widget is useless and is just for decoration purposes
-    Widget _decorationScannerView = Center(
-      child: SvgPicture.string(
-        scannerSVG,
-        allowDrawingOutsideViewBox: true,
+    Widget _decorationScannerView = IgnorePointer(
+      ignoring: true,
+      child: Center(
+        child: SvgPicture.string(
+          scannerSVG,
+          allowDrawingOutsideViewBox: true,
+        ),
       ),
     );
 
     /// This widget is useless and is just for decoration purposes.
     ///
     /// Instructs user to tap for starting scanning.
-    Widget _tapInstructionText = Center(
-      child: Text(
-        'Tap to Scan',
-        style: GoogleFonts.openSans(
-          fontSize: 18,
-          color: const Color(0xfff8f5f5),
-          fontWeight: FontWeight.w600,
-          shadows: [
-            Shadow(
-              color: const Color(0x29000000),
-              offset: Offset(3, 3),
-              blurRadius: 6,
-            )
-          ],
-        ),
-        textAlign: TextAlign.center,
-      ),
-    );
-    Widget _settingsButton = Container(
-      decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.5),
-        shape: BoxShape.circle,
-      ),
-      child: IconButton(
-        iconSize: _size,
-        onPressed: () {
-          print('Settings');
-        },
-        splashColor: Colors.white,
-        icon: Icon(
-          EvaIcons.options2Outline,
-          color: Colors.white,
+    Widget _tapInstructionText = IgnorePointer(
+      ignoring: true,
+      child: Center(
+        child: Text(
+          'Tap to Scan',
+          style: TextStyles.tapToScanLabelStyle,
+          textAlign: TextAlign.center,
         ),
       ),
     );
-    Widget _historyButton = IconButton(
-      iconSize: _size,
+
+    Widget _settingsButton = Bounce(
+      duration: const Duration(
+        milliseconds: 150,
+      ),
       onPressed: () {
-        print('History');
+        print('Settings');
       },
-      splashColor: Colors.white,
-      icon: Container(
-        height: _size,
-        width: _size,
+      child: Container(
         decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AppImageAssets.flowerIcon,
+          color: AppColors.halfBlack,
+          shape: BoxShape.circle,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SizedBox(
+            height: _size,
+            width: _size,
+            child: Center(
+              child: Icon(
+                EvaIcons.options2Outline,
+                color: AppColors.white,
+                size: _size,
+              ),
+            ),
           ),
         ),
       ),
     );
+
+    Widget _historyButton = Bounce(
+      duration: const Duration(
+        milliseconds: 150,
+      ),
+      onPressed: () {
+        print('History');
+      },
+      child: Container(
+        decoration: BoxDecoration(
+            color: AppColors.halfBlack,
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.circular(25)),
+        child: Padding(
+          padding: EdgeInsets.all(8),
+          child: SizedBox(
+            height: _size,
+            width: _size,
+            child: Container(
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AppImageAssets.flowerIcon,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+    final bool _isScannerDecorationVisible =
+        Provider.of<HomeProvider>(context).state == ScanState.ready;
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
@@ -115,8 +135,7 @@ class HomeScreen extends StatelessWidget {
         // filter: ImageFilter.blur(sigmaX: _sigmaX, sigmaY: _sigmaY),
         child: Scaffold(
           // backgroundColor: const Color(0xfffcffa4),
-          // backgroundColor: Colors.transparent,
-          backgroundColor: Colors.black.withOpacity(0.2),
+          backgroundColor: Colors.transparent,
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
@@ -128,16 +147,19 @@ class HomeScreen extends StatelessWidget {
           body: Stack(
             children: <Widget>[
               _cameraViewport,
-
-              /// Hide scanner decoration when running
-              Visibility(
-                visible:
-                    Provider.of<HomeProvider>(context).state == ScanState.idle,
+              // Hide scanner decoration when running
+              AnimatedOpacity(
+                opacity: _isScannerDecorationVisible ? 1 : 0,
+                duration: const Duration(
+                  milliseconds: 200,
+                ),
                 child: _decorationScannerView,
               ),
-              Visibility(
-                visible:
-                    Provider.of<HomeProvider>(context).state == ScanState.idle,
+              AnimatedOpacity(
+                opacity: _isScannerDecorationVisible ? 1 : 0,
+                duration: const Duration(
+                  milliseconds: 200,
+                ),
                 child: _tapInstructionText,
               ),
             ],

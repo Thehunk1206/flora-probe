@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// A custom bottom icon button bar
+/// A custom icon-button bar
 class BottomBar extends StatelessWidget {
   final List<Widget> items;
 
@@ -9,9 +9,9 @@ class BottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(8),
+      padding: EdgeInsets.only(left: 15, right: 15, top: 0, bottom: 8),
       child: SizedBox(
-        height: 55,
+        height: 60,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: items,

@@ -1,14 +1,16 @@
 import 'dart:async';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'package:floraprobe/src/commons/styles.dart';
 import 'package:floraprobe/src/provider/home.dart';
-import 'package:floraprobe/src/ui/components/dialog_of_result.dart';
+import 'package:floraprobe/src/ui/components/result_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart' as pp;
 import 'package:provider/provider.dart';
 
-import 'dialog.dart';
+import 'loading_dialog.dart';
 
 class CameraView extends StatefulWidget {
   final List<CameraDescription> cameras;
@@ -18,17 +20,19 @@ class CameraView extends StatefulWidget {
   _CameraViewState createState() => _CameraViewState();
 }
 
-class _CameraViewState extends State<CameraView> {
+class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
   CameraController controller;
   List<CameraDescription> cameras;
   final Loading loading = Loading();
+  HomeProvider deafProvider;
 
   bool hasError = false;
 
   @override
   void initState() {
     super.initState();
-    acquireCamera(); // Try acquiring available cameras
+    deafProvider = Provider.of<HomeProvider>(context, listen: false);
+    _setupCamera();
   }
 
   @override
@@ -37,7 +41,40 @@ class _CameraViewState extends State<CameraView> {
     super.dispose();
   }
 
-  Future<void> acquireCamera() async {
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    print('Application life state - $state');
+    if (state == AppLifecycleState.resumed) {
+      //on pause camera is disposed, so we need to call again "issue is only for android"
+      if (controller != null) _initializeCamera();
+    } else {
+      if (!mounted) {
+        return;
+      }
+      setState(() {});
+    }
+  }
+
+  Future<void> _setupCamera() async {
+    await _acquireCamera(); // Try acquiring available cameras
+    controller = CameraController(cameras.first, ResolutionPreset.medium);
+    await _initializeCamera();
+  }
+
+  Future<void> _initializeCamera() async {
+    controller.initialize().then((_) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {});
+      if (controller.value.isInitialized ?? false) {
+        // Update aspect ratio when controller is initialized
+        deafProvider.setAspectRatio(controller.value.aspectRatio);
+      }
+    });
+  }
+
+  Future<void> _acquireCamera() async {
     try {
       cameras = await availableCameras();
     } on CameraException {
@@ -48,13 +85,6 @@ class _CameraViewState extends State<CameraView> {
       return;
     }
     hasError = false;
-    controller = CameraController(cameras.first, ResolutionPreset.medium);
-    controller.initialize().then((_) {
-      if (!mounted) {
-        return;
-      }
-      setState(() {});
-    });
   }
 
   @override
@@ -71,12 +101,18 @@ class _CameraViewState extends State<CameraView> {
     if (!(controller?.value?.isInitialized ?? false)) {
       return Container(
         child: Center(
-          child: CircularProgressIndicator(),
+          child: CircularProgressIndicator(
+            strokeWidth: 10,
+          ),
         ),
       );
     }
-    return GestureDetector(
-      onTap: () async {
+    return Bounce(
+      duration: const Duration(
+        milliseconds: 120,
+      ),
+      onPressed: () async {
+        deafProvider.setScanState(ScanState.initializing);
         List<dynamic> res;
         loading.show(context);
         // Take the Picture in a try / catch block. If anything goes wrong,
@@ -84,7 +120,7 @@ class _CameraViewState extends State<CameraView> {
         try {
           // Construct the path where the image should be saved
           // package.
-          final path = p.join(
+          final String path = p.join(
             // Store the picture in the temp directory.
             (await pp.getTemporaryDirectory()).path,
             '${DateTime.now()}.png',
@@ -92,8 +128,8 @@ class _CameraViewState extends State<CameraView> {
 
           // Attempt to take a picture and log where it's been saved.
           await controller.takePicture(path);
-          res = await Provider.of<HomeProvider>(context, listen: false)
-              .searchImage(path, controller, context, loading);
+          res = await deafProvider.searchImage(
+              path, controller, context, loading);
         } catch (e) {
           // If an error occurs, log the error to the console.
           print(e);
@@ -101,13 +137,16 @@ class _CameraViewState extends State<CameraView> {
 
         // Showing results in dialog
         await widget.dialog.show(res);
+
         // Resume camera preview
-        // Provider.of<HomeProvider>(context, listen: false)
-        //     .setScanState(ScanState.idle);
+        deafProvider.setScanState(ScanState.ready);
       },
-      child: AspectRatio(
-        aspectRatio: controller.value.aspectRatio,
-        child: CameraPreview(controller),
+      child: ClipRRect(
+        borderRadius: Corners.borderRadius,
+        child: AspectRatio(
+          aspectRatio: controller.value.aspectRatio,
+          child: CameraPreview(controller),
+        ),
       ),
     );
   }

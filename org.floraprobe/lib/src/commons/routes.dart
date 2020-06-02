@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-// consts
-import 'string_const.dart';
 // Constant Strings which are all screen's uique path
 import 'routing_const.dart';
 
@@ -11,7 +9,7 @@ import '../ui/screens/home.dart';
 
 /// Wraps [screen] with a [PageRoute]
 PageRoute<T> wrapPageRoute<T>(Widget screen,
-    [bool useCupertinoPageRoute = true]) {
+    [bool useCupertinoPageRoute = false]) {
   if (useCupertinoPageRoute) {
     return CupertinoPageRoute<T>(builder: (context) => screen);
   }
@@ -27,9 +25,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     default:
       return wrapPageRoute<HomeScreen>(
         // The main homescreen of this application
-        HomeScreen(
-          title: Strings.title,
-        ),
+        HomeScreen(),
       );
   }
 }
