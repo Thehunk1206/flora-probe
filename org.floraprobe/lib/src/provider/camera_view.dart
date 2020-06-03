@@ -1,6 +1,6 @@
 import 'package:camera/camera.dart';
-import 'package:floraprobe/src/ui/components/loading_dialog.dart';
-import 'package:floraprobe/src/ui/components/result_dialog.dart';
+import 'package:floraprobe/src/ui/components/dialogs/loading_dialog.dart';
+import 'package:floraprobe/src/ui/components/dialogs/result_dialog.dart';
 import 'package:flutter/foundation.dart' show ChangeNotifier;
 import 'package:flutter/material.dart'
     show Scaffold, SnackBar, Text, BuildContext;

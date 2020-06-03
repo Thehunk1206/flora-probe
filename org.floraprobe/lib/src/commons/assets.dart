@@ -1,4 +1,4 @@
-import 'package:floraprobe/src/ui/components/scannerSVG.dart';
+import 'package:floraprobe/src/ui/components/decorations/scannerSVG.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:transparent_image/transparent_image.dart';

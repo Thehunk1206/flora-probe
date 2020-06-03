@@ -2,12 +2,12 @@ import 'dart:async';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:floraprobe/src/commons/styles.dart';
 import 'package:floraprobe/src/provider/camera_view.dart';
-import 'package:floraprobe/src/ui/components/loading.dart';
+import 'package:floraprobe/src/ui/components/widgets/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:provider/provider.dart';
 
-import 'loading_dialog.dart';
+import '../dialogs/loading_dialog.dart';
 
 class CameraView extends StatefulWidget {
   final List<CameraDescription> cameras;

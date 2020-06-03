@@ -1,18 +1,20 @@
 import 'dart:ui';
+import 'package:flutter/material.dart';
+
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 import 'package:floraprobe/src/commons/routing_const.dart';
 import 'package:floraprobe/src/provider/scanner.dart';
-import 'package:floraprobe/src/ui/components/background_cover.dart';
-import 'package:floraprobe/src/ui/components/bouncing_button.dart';
-import 'package:floraprobe/src/ui/components/iconlabel_button.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
+import 'package:floraprobe/src/ui/components/decorations/background_cover.dart';
+import 'package:floraprobe/src/ui/components/buttons/bouncing_button.dart';
+import 'package:floraprobe/src/ui/components/buttons/iconlabel_button.dart';
 import 'package:floraprobe/src/commons/assets.dart';
 import 'package:floraprobe/src/commons/string_const.dart';
 import 'package:floraprobe/src/commons/styles.dart';
-import 'package:floraprobe/src/ui/components/bottomBar.dart';
-import 'package:floraprobe/src/ui/components/scanner_view.dart';
-import 'package:flutter/material.dart';
+import 'package:floraprobe/src/ui/components/widgets/bottomBar.dart';
+import 'package:floraprobe/src/ui/components/widgets/scanner_view.dart';
+
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 
 /// The main app screen of flora probe

@@ -1,4 +1,3 @@
-import 'package:floraprobe/src/ui/screens/about.dart';
 import 'package:floraprobe/src/ui/screens/history.dart';
 import 'package:floraprobe/src/ui/screens/settings.dart';
 import 'package:flutter/cupertino.dart';

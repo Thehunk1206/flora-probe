@@ -1,13 +1,11 @@
-import 'dart:developer';
-
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
-import 'package:floraprobe/src/commons/string_const.dart';
-import 'package:floraprobe/src/commons/styles.dart';
-import 'package:floraprobe/src/ui/components/background_cover.dart';
-import 'package:floraprobe/src/ui/components/loading.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'package:floraprobe/src/commons/string_const.dart';
+import 'package:floraprobe/src/commons/styles.dart';
+import 'package:floraprobe/src/ui/components/decorations/background_cover.dart';
+import 'package:floraprobe/src/ui/components/widgets/loading.dart';
 
 void showMyLicensePage({
   @required BuildContext context,
