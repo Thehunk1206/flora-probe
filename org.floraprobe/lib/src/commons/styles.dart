@@ -8,12 +8,23 @@ class Corners {
   /// The value is same as [BorderRadius.circular(25.0)].
   static const BorderRadius borderRadius =
       const BorderRadius.all(Radius.circular(25.0));
+  static const ShapeBorder outlinedShapeBorder = RoundedRectangleBorder(
+    side: BorderSide(
+      color: Colors.black,
+      width: 2,
+    ),
+    borderRadius: const BorderRadius.all(
+      Radius.circular(25),
+    ),
+  );
 }
 
 class AppColors {
   static Color halfBlack = Colors.black.withOpacity(0.5);
   static Color halfWhite = Colors.white.withOpacity(0.5);
   static Color white = Colors.white;
+  static Color appbarColor = Colors.lightGreenAccent.withOpacity(0.30);
+  static Color lightGreen20 = Colors.lightGreenAccent.withOpacity(0.20);
 }
 
 class Paddings {
@@ -46,7 +57,13 @@ class TextStyles {
     color: const Color(0xfff8f5f5),
   );
 
-  static TextStyle appbarTitle = GoogleFonts.dancingScript(
+  static TextStyle appbarTitle = appTitle.copyWith(
+    fontSize: 30,
+    shadows: null,
+    fontWeight: FontWeight.w800,
+  );
+
+  static TextStyle appTitle = GoogleFonts.dancingScript(
     fontSize: 40,
     fontWeight: FontWeight.w900,
   );

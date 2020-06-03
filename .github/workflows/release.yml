@@ -44,9 +44,7 @@ jobs:
 
       - name: Build APKs
         # https://developer.android.com/studio/build/configure-apk-splits#configure-abi-split
-        run: |
-          cd $GITHUB_WORKSPACE/org.floraprobe
-          flutter build apk --release --split-per-abi
+        run: flutter build apk --release --split-per-abi
 
       - name: Upload artifact megazip
         uses: actions/upload-artifact@v1.0.0
@@ -54,7 +52,7 @@ jobs:
           # Artifact name
           name: org.floraprobe-android_apks.zip
           # Directory containing files to upload
-          path: $GITHUB_WORKSPACE/org.floraprobe/build/app/outputs/apk/release/
+          path: build/app/outputs/apk/release/
 
       - name: Upload release
         uses: softprops/action-gh-release@v1
@@ -63,8 +61,8 @@ jobs:
           body_path: $GITHUB_WORKSPACE/RELEASE_NOTES.md
           name: "Pre-release"
           files: |
-            $GITHUB_WORKSPACE/org.floraprobe/build/app/outputs/apk/release/app-arm64-v8a-release.apk
-            $GITHUB_WORKSPACE/org.floraprobe/build/app/outputs/apk/release/app-armeabi-v7a-release.apk
-            $GITHUB_WORKSPACE/org.floraprobe/build/app/outputs/apk/release/app-x86_64-release.apk
+            build/app/outputs/apk/release/app-arm64-v8a-release.apk
+            build/app/outputs/apk/release/app-armeabi-v7a-release.apk
+            build/app/outputs/apk/release/app-x86_64-release.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

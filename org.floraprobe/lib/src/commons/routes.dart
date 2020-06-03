@@ -1,3 +1,6 @@
+import 'package:floraprobe/src/ui/screens/about.dart';
+import 'package:floraprobe/src/ui/screens/history.dart';
+import 'package:floraprobe/src/ui/screens/settings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -21,11 +24,23 @@ PageRoute<T> wrapPageRoute<T>(Widget screen,
 /// Generates Routes which will be used in the application
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
+    case SettingsRoute:
+      return wrapPageRoute<SettingsScreen>(
+        SettingsScreen(),
+        true,
+      );
+    case HistoryRoute:
+      return wrapPageRoute<HistoryScreen>(
+        HistoryScreen(),
+        true,
+      );
     case HomeRoute:
     default:
       return wrapPageRoute<HomeScreen>(
         // The main homescreen of this application
-        HomeScreen(),
+        HomeScreen(
+          key: HomeRouteKey,
+        ),
       );
   }
 }

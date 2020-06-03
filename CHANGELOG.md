@@ -3,9 +3,17 @@
 ## Upcoming
 
 - Smaller app size
-- Performance improvements
+- Better detection
 - Compressed images
-- Complete options
+- history
+- new background
+
+## 0.0.3-beta+0603
+
+- Improved application architecture
+- Performance improvements
+- Complete UI
+- Bug fixes
 
 ## 0.0.2-beta+0602
 

@@ -10,7 +10,7 @@ class ResultsDialog {
   BuildContext _dialogcontext;
 
   /// Returns appropriate color for result Card based on it's confidence
-  static Color colorWith(double confidence) {
+  static Color _colorWith(double confidence) {
     Color _color;
     // TODO: use const Color values
     if (confidence > 0.75) {
@@ -25,7 +25,7 @@ class ResultsDialog {
     return _color;
   }
 
-  double getConstrainedBoxHeight(int numOfChildren) {
+  double _getConstrainedBoxHeight(int numOfChildren) {
     if (numOfChildren > 4) {
       return 5.0 * 70.0;
     } else {
@@ -33,7 +33,7 @@ class ResultsDialog {
     }
   }
 
-  Widget buildOutput(List<dynamic> results) {
+  Widget _buildOutput(List<dynamic> results) {
     Widget child;
     if (results?.isEmpty ?? true) {
       // No results
@@ -59,7 +59,7 @@ class ResultsDialog {
         ),
       );
     } else {
-      print('$results');
+      // TODO: This looks like a good place to note for history
 
       /// Sample output
       /// [{confidence: 0.6125634908676147, index: 10, label: lilly}]
@@ -99,7 +99,7 @@ class ResultsDialog {
         listItem = Material(
           elevation: 8,
           borderRadius: BorderRadius.circular(10),
-          color: colorWith(confidence),
+          color: _colorWith(confidence),
           child: Padding(
             padding: const EdgeInsets.only(
               top: 15.0,
@@ -127,10 +127,10 @@ class ResultsDialog {
       );
       child = Center(
         child: Padding(
-          padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+          padding: const EdgeInsets.only(left: 50.0, right: 50.0),
           child: ConstrainedBox(
             constraints: BoxConstraints(
-              maxHeight: getConstrainedBoxHeight(results.length),
+              maxHeight: _getConstrainedBoxHeight(results.length),
             ),
             child: Material(
               color: AppColors.halfWhite,
@@ -144,15 +144,10 @@ class ResultsDialog {
     return child;
   }
 
-  /// Use this method to store the context on which the dialog box will be shown.
-  void getContext(BuildContext context) {
-    _dialogcontext = context;
-  }
-
   /// Shows a modal dialog representing.
-  Future<dynamic> show(List<dynamic> results) async {
+  Future<dynamic> show(List<dynamic> results, BuildContext context) async {
     dynamic _res = await showDialog<dynamic>(
-      context: _dialogcontext,
+      context: context,
       barrierDismissible: true,
       builder: (BuildContext context) {
         _dialogcontext = context;
@@ -171,7 +166,7 @@ class ResultsDialog {
               // constraints: BoxConstraints(
               //   maxHeight: getConstrainedBoxHeight(results.length),
               // ),
-              child: buildOutput(results),
+              child: _buildOutput(results),
             ),
           ),
         );

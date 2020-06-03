@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:tflite/tflite.dart';
 
 import '../commons/assets.dart';
@@ -7,8 +5,12 @@ import '../commons/assets.dart';
 /// Responsible for identifying flora in image using the model
 class Probe {
   String _res;
+  bool _loaded = false;
 
+  /// Responsible for identifying flora in image using the model
+  Probe();
   Future<void> load() async {
+    if (_loaded) return;
     // Loades our Tflite model
     _res = await Tflite.loadModel(
         model: ModelAssetPath.flower_model,
@@ -18,42 +20,23 @@ class Probe {
             true // defaults to true, set to false to load resources outside assets
         );
     print('$_res in loading model');
+    _loaded = true;
   }
 
-  Future<void> dispose() async {
+  void dispose() async {
     await Tflite.close();
   }
 
-  /// Runs model on Uint8List.
+  /// Runs model from image on `filepath`.
   /// Sample output
   /// ```json
-  /// {
+  /// [{
   ///   index: 0,
-  ///   label: "person",
+  ///   label: "flower",
   ///   confidence: 0.629
-  /// }
+  /// }]
   /// ```
-  Future<List<dynamic>> run(Uint8List binary) async {
-    await load();
-    var recognitions = await Tflite.runModelOnBinary(
-      binary: binary,
-      numResults: 1, // defaults to 5
-      threshold: 0.5, // defaults to 0.1
-    );
-    Tflite.close();
-    return recognitions;
-  }
-
-  /// Runs model on Uint8List.
-  /// Sample output
-  /// ```json
-  /// {
-  ///   index: 0,
-  ///   label: "person",
-  ///   confidence: 0.629
-  /// }
-  /// ```
-  Future<List<dynamic>> runOnImage(String filepath) async {
+  Future<List<dynamic>> runModelFrom(String filepath) async {
     await load();
     var recognitions = await Tflite.runModelOnImage(
       path: filepath, // required
@@ -62,7 +45,6 @@ class Probe {
       numResults: 1, // defaults to 5
       threshold: 0.5, // defaults to 0.1
     );
-    Tflite.close();
     return recognitions;
   }
 }
