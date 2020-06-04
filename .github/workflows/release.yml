@@ -34,6 +34,7 @@ jobs:
       - name: Flutter pedantic actions
         run: |
           cd $GITHUB_WORKSPACE/org.floraprobe
+          pwd
           flutter doctor -v
           echo "Installing dependencies"
           flutter pub get
@@ -44,7 +45,10 @@ jobs:
 
       - name: Build APKs
         # https://developer.android.com/studio/build/configure-apk-splits#configure-abi-split
-        run: flutter build apk --release --split-per-abi
+        run: |
+          cd $GITHUB_WORKSPACE/org.floraprobe
+          pwd
+          flutter build apk --release --split-per-abi
 
       - name: Upload artifact megazip
         uses: actions/upload-artifact@v1.0.0
