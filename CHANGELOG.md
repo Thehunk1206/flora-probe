@@ -8,6 +8,12 @@
 - history
 - new background
 
+## 0.0.3-beta+0604
+
+- formatted
+- fixed dart analyze issues
+- reorganized components
+
 ## 0.0.3-beta+0603
 
 - Improved application architecture
