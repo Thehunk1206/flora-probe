@@ -35,7 +35,7 @@ jobs:
         run: |
           cd $GITHUB_WORKSPACE/org.floraprobe;
           echo "${{ secrets.KEYSTORE_JKS_ASC }}" > release.jks.asc;
-          echo "Decrypting to keystore";
+          echo "Decrypting keystore";
           gpg -d --passphrase "${{ secrets.STORE_PASSWORD }}" --batch release.jks.asc > release.jks;
           rm release.jks.asc;
 
@@ -47,14 +47,6 @@ jobs:
         run: |
           cd $GITHUB_WORKSPACE/org.floraprobe;
           flutter build apk --release --split-per-abi --split-debug-info=output/symbols;
-
-      - name: Upload artifact megazip
-        uses: actions/upload-artifact@v1.0.0
-        with:
-          # Artifact name
-          name: org.floraprobe-android_apks.zip
-          # Directory containing files to upload
-          path: org.floraprobe/build/app/outputs/apk/release/
 
       - name: Upload release
         uses: softprops/action-gh-release@v1

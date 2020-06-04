@@ -8,21 +8,14 @@ import 'package:flutter/material.dart';
 /// A reusable, modal dialog
 class ResultsDialog {
   BuildContext _dialogcontext;
+  /// Equivalent of Colors.red
+  static const HSVColor _red = const HSVColor.fromAHSV(1, 4, 0.779, 0.957);
+  /// Equivalent of Colors.green
+  static const HSVColor _green = const HSVColor.fromAHSV(1, 122, 0.566, 0.686);
 
   /// Returns appropriate color for result Card based on it's confidence
-  static Color _colorWith(double confidence) {
-    Color _color;
-    // TODO: use const Color values
-    if (confidence > 0.75) {
-      _color = Colors.green.withOpacity(confidence);
-    } else if (confidence > 0.5) {
-      _color = Colors.yellow.withOpacity(confidence + 0.10);
-    } else if (confidence > 0.25) {
-      _color = Colors.orange.withOpacity(confidence + 0.20);
-    } else {
-      _color = Colors.red.withOpacity(confidence + 0.30);
-    }
-    return _color;
+  static Color _colorOf(double confidence) {
+    return HSVColor.lerp(_red, _green, confidence).toColor();
   }
 
   double _getConstrainedBoxHeight(int numOfChildren) {
@@ -99,7 +92,7 @@ class ResultsDialog {
         listItem = Material(
           elevation: 8,
           borderRadius: BorderRadius.circular(10),
-          color: _colorWith(confidence),
+          color: _colorOf(confidence),
           child: Padding(
             padding: const EdgeInsets.only(
               top: 15.0,
