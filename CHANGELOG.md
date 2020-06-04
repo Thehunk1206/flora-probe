@@ -3,13 +3,22 @@
 ## Upcoming
 
 - Smaller app size
-- Better detection
+- Optimised & better model for greater detection
 - Compressed images
-- history
+- History & settings support
 - new background
 
-## 0.0.3-beta+0604
+## 0.0.4-beta+0605
 
+- Result card colors are now beautifully interpolated between Colors.red & Colors.green based on confidence
+
+## 0.0.4-beta+0604
+
+- implemented release key config
+- network fix in release
+
+## 0.0.3-beta+0604
+ 
 - formatted
 - fixed dart analyze issues
 - reorganized components

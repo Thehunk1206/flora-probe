@@ -6,7 +6,7 @@ class Strings {
   static const String aboutTitle = 'About';
   static const String historyTitle = 'History';
   static const String results = 'Results';
-  static const String applicationVersion = '0.0.4-beta+0604';
+  static const String applicationVersion = '0.0.4-beta+0605';
   static const String contactUs = 'Contact us';
   static const String viewLicenses = 'View licenses';
   static const String developerInformation = 'By Tauhid Khan & Mushaheed Syed';
