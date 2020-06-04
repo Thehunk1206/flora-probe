@@ -8,8 +8,10 @@ import 'package:flutter/material.dart';
 /// A reusable, modal dialog
 class ResultsDialog {
   BuildContext _dialogcontext;
+
   /// Equivalent of Colors.red
   static const HSVColor _red = const HSVColor.fromAHSV(1, 4, 0.779, 0.957);
+
   /// Equivalent of Colors.green
   static const HSVColor _green = const HSVColor.fromAHSV(1, 122, 0.566, 0.686);
 

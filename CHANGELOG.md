@@ -6,11 +6,21 @@
 - Optimised & better model for greater detection
 - Compressed images
 - History & settings support
-- new background
+- new background cover
+- local persistent database support with hive & hive_flutter
+- settings option to change model's threshold
+- history page to show past successful scans (swipe deleteable)
+- results now shows photos of respective flower in results and a hyperlink to it's wikipedia page
+- result dialog box adapts to Material child
+- app will use dart manifest file to obtain application information
+- more optimised reusability of code
+- description in about dialog is scrollable
+- proper tests for code
 
-## 0.0.4-beta+0605
+## 0.0.5-beta+0608 (under development)
 
 - Result card colors are now beautifully interpolated between Colors.red & Colors.green based on confidence
+- bug fixes
 
 ## 0.0.4-beta+0604
 
