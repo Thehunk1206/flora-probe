@@ -12,7 +12,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  assembleRelease:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -31,23 +31,22 @@ jobs:
           # The Flutter build release channel
           channel: stable # optional, default is stable
 
-      - name: Flutter pedantic actions
+      - name: Restore release key
         run: |
-          cd $GITHUB_WORKSPACE/org.floraprobe
-          pwd
-          flutter doctor -v
-          echo "Installing dependencies"
-          flutter pub get
-          echo "Checking for formatting issues"
-          flutter format --set-exit-if-changed .
-          echo "Analyzing for issues"
-          flutter analyze .
+          cd $GITHUB_WORKSPACE/org.floraprobe;
+          echo "${{ secrets.KEYSTORE_JKS_ASC }}" > release.jks.asc;
+          echo "Decrypting to keystore";
+          gpg -d --passphrase "${{ secrets.STORE_PASSWORD }}" --batch release.jks.asc > release.jks;
+          rm release.jks.asc;
 
       - name: Build APKs
+        env:
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
         # https://developer.android.com/studio/build/configure-apk-splits#configure-abi-split
         run: |
-          cd $GITHUB_WORKSPACE/org.floraprobe
-          flutter build apk --release --split-per-abi
+          cd $GITHUB_WORKSPACE/org.floraprobe;
+          flutter build apk --release --split-per-abi --split-debug-info=output/symbols;
 
       - name: Upload artifact megazip
         uses: actions/upload-artifact@v1.0.0
@@ -60,7 +59,7 @@ jobs:
       - name: Upload release
         uses: softprops/action-gh-release@v1
         with:
-          prerelease: yes
+          prerelease: true
           body_path: RELEASE_NOTES.md
           name: "Pre-release"
           files: |
