@@ -47,8 +47,8 @@
 - Fixed Camera life cycle issue
 - Improved how results were shown
 - version semantic now will follow:
-  - `version + hotfix.n` &nbsp;for stable builds
-  - `version - beta + mmdd` &nbsp;for any pre-release builds
+  - `major.minor.patch + hotfix.<hotfix number>` &nbsp;for stable builds
+  - `major.minor.patch - beta + mm<pre-release version in mm>` &nbsp;for any pre-release builds
 
 ## 0.0.1+1
 
