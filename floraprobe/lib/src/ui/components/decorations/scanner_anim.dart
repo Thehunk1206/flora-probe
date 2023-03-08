@@ -5,21 +5,22 @@ import 'scanner_widget.dart';
 /// Shows scanning animation above child
 class ScannerAnimationWrap extends StatefulWidget {
   final Widget child;
-  const ScannerAnimationWrap({Key key, this.child}) : super(key: key);
+  const ScannerAnimationWrap({super.key, required this.child});
+
   @override
   _ScannerAnimationWrapState createState() => _ScannerAnimationWrapState();
 }
 
 class _ScannerAnimationWrapState extends State<ScannerAnimationWrap>
     with SingleTickerProviderStateMixin {
-  AnimationController _animationController;
+  late AnimationController _animationController;
   bool _animationStopped = false;
   bool scanning = false;
 
   @override
   void initState() {
-    _animationController = new AnimationController(
-        duration: new Duration(seconds: 1), vsync: this);
+    _animationController =
+        AnimationController(duration: const Duration(seconds: 1), vsync: this);
 
     _animationController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {

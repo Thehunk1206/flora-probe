@@ -5,9 +5,11 @@ import 'package:floraprobe/src/commons/styles.dart';
 import 'package:floraprobe/src/ui/components/decorations/background_cover.dart';
 
 class SettingsScreen extends StatelessWidget {
+  const SettingsScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
-    Text _appbarTitle = Text(
+    Text appbarTitle = Text(
       Strings.settingsTitle,
       style: TextStyles.appbarTitle,
     );
@@ -16,7 +18,7 @@ class SettingsScreen extends StatelessWidget {
         backgroundColor: AppColors.lightGreen20,
         appBar: AppBar(
           leading: IconButton(
-            icon: Icon(
+            icon: const Icon(
               EvaIcons.arrowIosBackOutline,
             ),
             onPressed: () {
@@ -25,7 +27,7 @@ class SettingsScreen extends StatelessWidget {
           ),
           backgroundColor: AppColors.appbarColor,
           elevation: 1,
-          title: _appbarTitle,
+          title: appbarTitle,
         ),
         body: ListView(),
       ),

@@ -7,11 +7,10 @@ import 'package:transparent_image/transparent_image.dart';
 /// used in this application
 class AppImageAssets {
   static const AssetImage flowerBackground =
-      const AssetImage('assets/images/Flora_bg.png');
-  static const AssetImage flowerIcon =
-      const AssetImage('assets/images/flower.png');
+      AssetImage('assets/images/Flora_bg.png');
+  static const AssetImage flowerIcon = AssetImage('assets/images/flower.png');
   static const AssetImage foundNothing =
-      const AssetImage('assets/images/nothing.png');
+      AssetImage('assets/images/nothing.png');
   static MemoryImage transparentImage = MemoryImage(kTransparentImage);
   static SvgPicture scannerVector = SvgPicture.string(
     scannerSVG,

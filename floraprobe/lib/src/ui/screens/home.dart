@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -19,21 +18,21 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 
 /// The main app screen of flora probe
 class HomeScreen extends StatelessWidget {
-  HomeScreen({
-    Key key,
-  }) : super(key: key);
+  const HomeScreen({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    const double _size = 40;
-    Text _appbarTitle = Text(
+    const double size = 40;
+    Text appbarTitle = Text(
       Strings.title,
       style: TextStyles.appTitle,
     );
 
     // TODO: Bounce effect when CameraView is tapped
     /// This widget is useless and is just for decoration purposes
-    Widget _decorationScannerView = IgnorePointer(
+    Widget decorationScannerView = IgnorePointer(
       ignoring: true,
       child: Center(
         child: AppImageAssets.scannerVector,
@@ -43,7 +42,7 @@ class HomeScreen extends StatelessWidget {
     /// This widget is useless and is just for decoration purposes.
     ///
     /// Instructs user to tap for starting scanning.
-    Widget _tapInstructionText = IgnorePointer(
+    Widget tapInstructionText = IgnorePointer(
       ignoring: true,
       child: Center(
         child: Text(
@@ -55,20 +54,20 @@ class HomeScreen extends StatelessWidget {
     );
 
     /// Buttons ===
-    Widget _historyButton = BouncingButton(
-      icon: FaIcon(
+    Widget historyButton = BouncingButton(
+      icon: const FaIcon(
         FontAwesomeIcons.history,
         color: Colors.white,
       ),
-      size: _size,
+      size: size,
       tooltip: 'Show history',
       onPressed: () {
         Navigator.of(context).pushNamed(HistoryRoute);
       },
     );
 
-    Widget _settingsButton = BouncingButton(
-      size: _size,
+    Widget settingsButton = BouncingButton(
+      size: size,
       onPressed: () {
         Navigator.of(context).pushNamed(SettingsRoute);
       },
@@ -76,13 +75,13 @@ class HomeScreen extends StatelessWidget {
       icon: Icon(
         EvaIcons.options2Outline,
         color: AppColors.white,
-        size: _size,
+        size: size,
       ),
     );
 
-    final double _scannerDecorationOpacity =
+    final double scannerDecorationOpacity =
         Provider.of<Scanner>(context).state == ScannerState.ready ? 1 : 0;
-    final Duration _opacityAnimationDuration = const Duration(
+    const Duration opacityAnimationDuration = Duration(
       milliseconds: 200,
     );
     return BackgroundCover(
@@ -92,8 +91,8 @@ class HomeScreen extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
-          title: _appbarTitle,
-          actions: <Widget>[
+          title: appbarTitle,
+          actions: const <Widget>[
             IconLabelButton(),
             SizedBox(
               width: 5,
@@ -102,26 +101,26 @@ class HomeScreen extends StatelessWidget {
         ),
         body: Stack(
           children: <Widget>[
-            ScannerView(
+            const ScannerView(
               key: CameraVPKey,
             ),
             // Hide scanner decoration when running
             AnimatedOpacity(
-              opacity: _scannerDecorationOpacity,
-              duration: _opacityAnimationDuration,
-              child: _decorationScannerView,
+              opacity: scannerDecorationOpacity,
+              duration: opacityAnimationDuration,
+              child: decorationScannerView,
             ),
             AnimatedOpacity(
-              opacity: _scannerDecorationOpacity,
-              duration: _opacityAnimationDuration,
-              child: _tapInstructionText,
+              opacity: scannerDecorationOpacity,
+              duration: opacityAnimationDuration,
+              child: tapInstructionText,
             ),
           ],
         ),
         bottomNavigationBar: BottomBar(
           items: <Widget>[
-            _settingsButton,
-            _historyButton,
+            settingsButton,
+            historyButton,
           ],
         ),
       ),

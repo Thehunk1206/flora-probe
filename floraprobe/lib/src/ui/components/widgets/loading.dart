@@ -4,14 +4,14 @@ class CircularLoading extends StatelessWidget {
   final bool useScaffold;
   final bool useWhiteBackground;
   const CircularLoading({
-    Key key,
+    super.key,
     this.useScaffold = true,
     this.useWhiteBackground = true,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
-    Widget child = Center(
+    Widget child = const Center(
       child: CircularProgressIndicator(
         strokeWidth: 3,
       ),
@@ -20,7 +20,7 @@ class CircularLoading extends StatelessWidget {
       child = Scaffold(body: child);
     } else if (useWhiteBackground) {
       child = DecoratedBox(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Colors.white,
         ),
         child: child,
@@ -28,9 +28,10 @@ class CircularLoading extends StatelessWidget {
     }
     return Theme(
       data: ThemeData(
-        accentColor: Colors.lightGreenAccent,
-        backgroundColor: Colors.lightGreen,
         scaffoldBackgroundColor: Colors.yellow,
+        colorScheme: ColorScheme.fromSwatch()
+            .copyWith(secondary: Colors.lightGreenAccent)
+            .copyWith(background: Colors.lightGreen),
       ),
       child: child,
     );

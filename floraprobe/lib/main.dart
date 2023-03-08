@@ -32,6 +32,8 @@ class MyApp extends StatelessWidget {
   // Thus, using keys below may cause widgets to update instead of remounting.
   // Using keys isn't necessary as Flutter is fast but we don't want to remount heavy widgets hence the usage
   final _appKey = GlobalKey();
+
+  MyApp({super.key});
   @override
   Widget build(BuildContext context) {
     AppImageAssets.cacheMedia(context);

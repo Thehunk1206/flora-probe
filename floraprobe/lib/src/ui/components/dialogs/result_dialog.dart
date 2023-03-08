@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:floraprobe/src/commons/assets.dart';
 import 'package:floraprobe/src/commons/string_const.dart';
 import 'package:floraprobe/src/commons/styles.dart';
@@ -7,22 +5,22 @@ import 'package:flutter/material.dart';
 
 /// A reusable, modal dialog
 class ResultsDialog {
-  BuildContext _dialogcontext;
+  BuildContext? _dialogcontext;
 
   /// Returns appropriate color for result Card based on it's confidence
   static Color _colorWith(double confidence) {
-    Color _color;
+    Color color;
     // TODO: use const Color values
     if (confidence > 0.75) {
-      _color = Colors.green.withOpacity(confidence);
+      color = Colors.green.withOpacity(confidence);
     } else if (confidence > 0.5) {
-      _color = Colors.yellow.withOpacity(confidence + 0.10);
+      color = Colors.yellow.withOpacity(confidence + 0.10);
     } else if (confidence > 0.25) {
-      _color = Colors.orange.withOpacity(confidence + 0.20);
+      color = Colors.orange.withOpacity(confidence + 0.20);
     } else {
-      _color = Colors.red.withOpacity(confidence + 0.30);
+      color = Colors.red.withOpacity(confidence + 0.30);
     }
-    return _color;
+    return color;
   }
 
   double _getConstrainedBoxHeight(int numOfChildren) {
@@ -39,9 +37,9 @@ class ResultsDialog {
       // No results
       child = Container(
         // Controls image size under constraints
-        margin: EdgeInsets.all(20),
+        margin: const EdgeInsets.all(20),
         // The illustration to show when list is empty
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AppImageAssets.foundNothing,
           ),
@@ -50,7 +48,7 @@ class ResultsDialog {
       child = Center(
         child: ConstrainedBox(
           /// Box should be square, hence the restriction
-          constraints: BoxConstraints.tight(Size(150, 150)),
+          constraints: BoxConstraints.tight(const Size(150, 150)),
           child: Material(
             color: Colors.black.withOpacity(0.5),
             borderRadius: BorderRadius.circular(25),
@@ -72,8 +70,8 @@ class ResultsDialog {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(left: 8, right: 8),
+            const Padding(
+              padding: EdgeInsets.only(left: 8, right: 8),
               child: Icon(
                 Icons.texture,
                 size: 30,
@@ -111,15 +109,16 @@ class ResultsDialog {
         children.add(listItem);
       }
       child = ListView(
-        physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-        padding: EdgeInsets.all(16),
+        physics: const BouncingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics()),
+        padding: const EdgeInsets.all(16),
         children: [
           Text(
             Strings.results,
             textAlign: TextAlign.left,
             style: TextStyles.tapToScanLabelStyle,
           ),
-          SizedBox(
+          const SizedBox(
             height: 8,
           ),
           ...children,
@@ -146,7 +145,7 @@ class ResultsDialog {
 
   /// Shows a modal dialog representing.
   Future<dynamic> show(List<dynamic> results, BuildContext context) async {
-    dynamic _res = await showDialog<dynamic>(
+    dynamic res = await showDialog<dynamic>(
       context: context,
       barrierDismissible: true,
       builder: (BuildContext context) {
@@ -172,11 +171,12 @@ class ResultsDialog {
         );
       },
     );
-    return _res;
+    return res;
   }
 
   /// Dismisses the dialog created by this Object.
   Future<void> hide() async {
-    Navigator.of(_dialogcontext).pop();
+    if (_dialogcontext == null) return;
+    Navigator.of(_dialogcontext!).pop();
   }
 }

@@ -7,16 +7,15 @@ import '../../commons/styles.dart';
 import 'license.dart';
 
 void showMyAboutDialog({
-  @required BuildContext context,
-  String applicationName,
-  String applicationVersion,
-  Widget applicationIcon,
-  String applicationLegalese,
-  List<Widget> children,
+  required BuildContext context,
+  String? applicationName,
+  String? applicationVersion,
+  Widget? applicationIcon,
+  String? applicationLegalese,
+  List<Widget>? children,
   bool useRootNavigator = true,
-  RouteSettings routeSettings,
+  RouteSettings? routeSettings,
 }) {
-  assert(context != null);
   showDialog<void>(
     context: context,
     useRootNavigator: useRootNavigator,
@@ -39,19 +38,19 @@ class AboutDialog extends StatelessWidget {
   /// derived from the nearest [Title] widget. The version, icon, and legalese
   /// values default to the empty string.
   const AboutDialog({
-    Key key,
+    super.key,
     this.applicationVersion,
     this.applicationIcon,
     this.applicationLegalese,
     this.children,
-  }) : super(key: key);
+  });
 
   /// The version of this build of the application.
   ///
   /// This string is shown under the application name.
   ///
   /// Defaults to the empty string.
-  final String applicationVersion;
+  final String? applicationVersion;
 
   /// The icon to show next to the application name.
   ///
@@ -59,14 +58,14 @@ class AboutDialog extends StatelessWidget {
   ///
   /// Typically this will be an [ImageIcon] widget. It should honor the
   /// [IconTheme]'s [IconThemeData.size].
-  final Widget applicationIcon;
+  final Widget? applicationIcon;
 
   /// A string to show in small print.
   ///
   /// Typically this is a copyright notice.
   ///
   /// Defaults to the empty string.
-  final String applicationLegalese;
+  final String? applicationLegalese;
 
   /// Widgets to add to the dialog box after the name, version, and legalese.
   ///
@@ -74,21 +73,21 @@ class AboutDialog extends StatelessWidget {
   /// or other information to show in the about box.
   ///
   /// Defaults to nothing.
-  final List<Widget> children;
+  final List<Widget>? children;
 
   @override
   Widget build(BuildContext context) {
     // final String name = Strings.title;
-    final String version = applicationVersion;
-    final Widget icon = applicationIcon;
-    final TextStyle _outlineButtonTextStyle =
-        Theme.of(context).textTheme.button.copyWith(
+    final String? version = applicationVersion;
+    final Widget? icon = applicationIcon;
+    final TextStyle? outlineButtonTextStyle =
+        Theme.of(context).textTheme.labelLarge?.copyWith(
               fontSize: 12,
             );
     // TODO(predatorx7) check AlertDialog's scrollable true
     return Dialog(
       backgroundColor: Colors.lightGreen[100],
-      shape: RoundedRectangleBorder(borderRadius: Corners.borderRadius),
+      shape: const RoundedRectangleBorder(borderRadius: Corners.borderRadius),
       clipBehavior: Clip.hardEdge,
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -97,7 +96,7 @@ class AboutDialog extends StatelessWidget {
           Row(
             children: <Widget>[
               IconButton(
-                icon: Icon(EvaIcons.close),
+                icon: const Icon(EvaIcons.close),
                 tooltip: 'close',
                 onPressed: () => Navigator.of(context).maybePop(),
               )
@@ -114,23 +113,24 @@ class AboutDialog extends StatelessWidget {
                   child: RichText(
                     text: TextSpan(
                       text: 'version ',
-                      style: Theme.of(context).textTheme.bodyText2.copyWith(
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                           fontStyle: FontStyle.italic,
                           color: Colors.green),
                       children: [
                         TextSpan(
                           text: version,
-                          style: Theme.of(context).textTheme.bodyText2.copyWith(
-                                fontStyle: FontStyle.italic,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                    fontStyle: FontStyle.italic,
+                                  ),
                         ),
                       ],
                     ),
                   ),
                 ),
-                ...children,
-                SizedBox(
+                ...?children,
+                const SizedBox(
                   height: 10,
                 ),
                 // Padding(
@@ -157,7 +157,7 @@ class AboutDialog extends StatelessWidget {
                     },
                     child: Text(
                       Strings.contactUs,
-                      style: _outlineButtonTextStyle,
+                      style: outlineButtonTextStyle,
                     ),
                   ),
                 ),
@@ -169,7 +169,7 @@ class AboutDialog extends StatelessWidget {
                     ),
                     child: Text(
                       Strings.viewLicenses,
-                      style: _outlineButtonTextStyle,
+                      style: outlineButtonTextStyle,
                     ),
                     onPressed: () {
                       showMyLicensePage(

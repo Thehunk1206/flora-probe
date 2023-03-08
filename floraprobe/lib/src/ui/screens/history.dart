@@ -7,9 +7,11 @@ import '../../commons/styles.dart';
 import '../components/decorations/background_cover.dart';
 
 class HistoryScreen extends StatelessWidget {
+  const HistoryScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
-    Text _appbarTitle = Text(
+    Text appbarTitle = Text(
       Strings.historyTitle,
       style: TextStyles.appbarTitle,
     );
@@ -18,7 +20,7 @@ class HistoryScreen extends StatelessWidget {
         backgroundColor: AppColors.lightGreen20,
         appBar: AppBar(
           leading: IconButton(
-            icon: Icon(
+            icon: const Icon(
               EvaIcons.arrowIosBackOutline,
             ),
             onPressed: () {
@@ -27,7 +29,7 @@ class HistoryScreen extends StatelessWidget {
           ),
           backgroundColor: AppColors.appbarColor,
           elevation: 0,
-          title: _appbarTitle,
+          title: appbarTitle,
         ),
         body: ListView(),
       ),

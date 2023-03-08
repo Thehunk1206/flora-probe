@@ -5,11 +5,14 @@ class BottomBar extends StatelessWidget {
   final List<Widget> items;
 
   /// Creates a custom bottom icon button bar
-  const BottomBar({Key key, this.items}) : super(key: key);
+  const BottomBar({
+    super.key,
+    this.items = const [],
+  });
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(left: 15, right: 15, top: 0, bottom: 8),
+      padding: const EdgeInsets.only(left: 15, right: 15, top: 0, bottom: 8),
       child: SizedBox(
         height: 60,
         child: Row(

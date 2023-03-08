@@ -11,18 +11,18 @@ import '../dialogs/loading_dialog.dart';
 
 class CameraView extends StatefulWidget {
   final List<CameraDescription> cameras;
-  const CameraView({Key key, this.cameras}) : super(key: key);
+  const CameraView({super.key, this.cameras = const []});
   @override
   _CameraViewState createState() => _CameraViewState();
 }
 
 class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
-  CameraController controller;
+  CameraController? controller;
   List<CameraDescription> cameras = [];
   final Loading loading = Loading();
 
   /// HomeProvider with listen false
-  CameraViewNotifier deafProvider;
+  late CameraViewNotifier deafProvider;
 
   bool hasError = false;
   bool init = false;
@@ -58,7 +58,7 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
         break;
       case AppLifecycleState.paused:
         //  camera should be closed when our activity reaches onPause().
-        if (controller != null) controller.dispose();
+        if (controller != null) controller?.dispose();
         // Because of an issue with camera plugin, we are assigning null to it
         controller = null;
         init = false;
@@ -69,8 +69,9 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
   }
 
   Future<void> _setupCamera() async {
-    if (cameras.isEmpty)
+    if (cameras.isEmpty) {
       await _acquireCamera(); // Try acquiring available cameras
+    }
     print('Acquired camera');
     controller = CameraController(cameras.first, ResolutionPreset.medium,
         enableAudio: false);
@@ -87,14 +88,14 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
       // FATAL EXCEPTION: main
       // ```
       init = true;
-      await controller.initialize();
+      await controller?.initialize();
     }
     if (!mounted) {
       return;
     }
     setState(() {});
-    if (controller.value.isInitialized ?? false) {
-      deafProvider.setCameraController(controller);
+    if (controller?.value.isInitialized ?? false) {
+      deafProvider.setCameraController(controller!);
     }
   }
 
@@ -115,15 +116,15 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     if (hasError) {
       // show option to retry
-      return Center(
+      return const Center(
         child: Icon(
           EvaIcons.alertCircleOutline,
           color: Colors.red,
         ),
       );
     }
-    if (!(controller?.value?.isInitialized ?? false)) {
-      return CircularLoading(
+    if (!(controller?.value.isInitialized ?? false)) {
+      return const CircularLoading(
         useScaffold: false,
       );
     }
@@ -131,8 +132,8 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
       clipBehavior: Clip.hardEdge,
       borderRadius: Corners.borderRadius,
       child: AspectRatio(
-        aspectRatio: controller.value.aspectRatio,
-        child: CameraPreview(controller),
+        aspectRatio: controller?.value.aspectRatio ?? 1.6,
+        child: CameraPreview(controller!),
       ),
     );
   }

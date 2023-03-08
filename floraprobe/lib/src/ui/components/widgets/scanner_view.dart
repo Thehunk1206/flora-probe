@@ -3,7 +3,6 @@ import 'package:floraprobe/src/commons/routing_const.dart';
 import 'package:floraprobe/src/commons/styles.dart';
 import 'package:floraprobe/src/provider/camera_view.dart';
 import 'package:floraprobe/src/provider/scanner.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:provider/provider.dart';
@@ -11,12 +10,12 @@ import 'package:provider/provider.dart';
 import 'CameraView2.dart';
 
 class ScannerView extends StatelessWidget {
-  const ScannerView({Key key}) : super(key: key);
+  const ScannerView({super.key});
 
   @override
   Widget build(BuildContext context) {
     Scanner scannerProvider = Provider.of<Scanner>(context);
-    final bool _shouldShowCamera =
+    final bool shouldShowCamera =
         (scannerProvider.state == ScannerState.ready ||
             scannerProvider.state == ScannerState.initializing);
     // If Scanner.state is ScannerState.ready then this child will be a live camera preview
@@ -24,19 +23,19 @@ class ScannerView extends StatelessWidget {
     Widget viewportChild = Stack(
       children: [
         Visibility(
-          visible: _shouldShowCamera,
+          visible: shouldShowCamera,
           maintainState: true,
-          child: CameraView(
+          child: const CameraView(
             key: CameraViewKey,
           ),
         ),
         Visibility(
-          visible: !_shouldShowCamera,
+          visible: !shouldShowCamera,
           child: Container(
             decoration: BoxDecoration(
               borderRadius: Corners.borderRadius,
               image: DecorationImage(
-                image: scannerProvider?.latestSnappedImage ??
+                image: scannerProvider.latestSnappedImage ??
                     AppImageAssets.transparentImage,
                 fit: BoxFit.cover,
               ),
@@ -68,7 +67,7 @@ class ScannerView extends StatelessWidget {
                   // Changes the aspectRatio of this widget as same as CameraView.
                   // The aspectRatio used here is obtained from CameraController used in CameraView widget.
                   // When that aspectRatio is null, 2/3 is used as a fallback.
-                  aspectRatio: cameraView?.aspectRatio ?? 2 / 3,
+                  aspectRatio: cameraView.aspectRatio ?? 2 / 3,
                   child: viewportChild,
                 );
               },

@@ -5,23 +5,23 @@ import 'package:flutter_bounce/flutter_bounce.dart';
 class BouncingButton extends StatelessWidget {
   final double size;
   final Widget icon;
-  final void Function() onPressed;
-  final Decoration decoration;
-  final EdgeInsetsGeometry padding;
-  final EdgeInsetsGeometry margin;
-  final String tooltip;
+  final VoidCallback onPressed;
+  final Decoration? decoration;
+  final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? margin;
+  final String? tooltip;
 
   /// Creates an icon button which bounces on tap.
   const BouncingButton({
-    Key key,
-    @required this.size,
-    @required this.icon,
-    this.onPressed,
+    super.key,
+    required this.size,
+    required this.icon,
+    required this.onPressed,
     this.decoration,
     this.padding,
     this.margin,
     this.tooltip,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

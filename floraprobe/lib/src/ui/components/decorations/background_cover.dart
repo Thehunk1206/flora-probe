@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 class BackgroundCover extends StatelessWidget {
   final Widget child;
 
-  const BackgroundCover({Key key, this.child}) : super(key: key);
+  const BackgroundCover({super.key, required this.child});
+
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         image: DecorationImage(
           image: AppImageAssets.flowerBackground,
           fit: BoxFit.cover,

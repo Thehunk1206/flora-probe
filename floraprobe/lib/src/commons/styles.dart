@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Corners {
@@ -7,13 +6,13 @@ class Corners {
   ///
   /// The value is same as [BorderRadius.circular(25.0)].
   static const BorderRadius borderRadius =
-      const BorderRadius.all(Radius.circular(25.0));
-  static const ShapeBorder outlinedShapeBorder = RoundedRectangleBorder(
+      BorderRadius.all(Radius.circular(25.0));
+  static const OutlinedBorder outlinedShapeBorder = RoundedRectangleBorder(
     side: BorderSide(
       color: Colors.black,
       width: 2,
     ),
-    borderRadius: const BorderRadius.all(
+    borderRadius: BorderRadius.all(
       Radius.circular(25),
     ),
   );
@@ -28,7 +27,7 @@ class AppColors {
 }
 
 class Paddings {
-  static const EdgeInsetsGeometry padding8 = const EdgeInsets.all(8.0);
+  static const EdgeInsetsGeometry padding8 = EdgeInsets.all(8.0);
 }
 
 class TextStyles {
@@ -37,8 +36,8 @@ class TextStyles {
     fontWeight: FontWeight.w600,
     fontSize: 18,
     shadows: [
-      Shadow(
-        color: const Color(0x29000000),
+      const Shadow(
+        color: Color(0x29000000),
         offset: Offset(3, 3),
         blurRadius: 6,
       )

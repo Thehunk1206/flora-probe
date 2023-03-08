@@ -4,7 +4,7 @@ import '../commons/assets.dart';
 
 /// Responsible for identifying flora in image using the model
 class Probe {
-  String _res;
+  String? _res;
   bool _loaded = false;
 
   /// Responsible for identifying flora in image using the model
@@ -36,7 +36,7 @@ class Probe {
   ///   confidence: 0.629
   /// }]
   /// ```
-  Future<List<dynamic>> runModelFrom(String filepath) async {
+  Future<List<dynamic>?> runModelFrom(String filepath) async {
     await load();
     var recognitions = await Tflite.runModelOnImage(
       path: filepath, // required

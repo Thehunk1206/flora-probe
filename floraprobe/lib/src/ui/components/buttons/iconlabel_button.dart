@@ -5,24 +5,26 @@ import 'package:floraprobe/src/ui/screens/about.dart';
 import 'package:flutter/material.dart';
 
 class IconLabelButton extends StatelessWidget {
+  const IconLabelButton({super.key});
+
   @override
   Widget build(BuildContext context) {
-    final _iconSize = IconTheme.of(context)?.size ?? 28;
+    final iconSize = IconTheme.of(context).size ?? 28;
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Padding(
-          padding: EdgeInsets.only(left: 10),
+          padding: const EdgeInsets.only(left: 10),
           child: Tooltip(
             message: 'Show about us',
             child: OutlinedButton.icon(
               style: OutlinedButton.styleFrom(
-                shape: RoundedRectangleBorder(
+                shape: const RoundedRectangleBorder(
                   side: BorderSide(
                     color: Colors.black,
                     width: 2,
                   ),
-                  borderRadius: const BorderRadius.all(
+                  borderRadius: BorderRadius.all(
                     Radius.circular(25),
                   ),
                 ),
@@ -41,7 +43,7 @@ class IconLabelButton extends StatelessWidget {
                   children: [
                     Text(
                       Strings.applicationAbout,
-                      style: Theme.of(context).textTheme.caption.copyWith(
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
                             fontSize: 14,
                           ),
                     ),
@@ -49,10 +51,10 @@ class IconLabelButton extends StatelessWidget {
                 );
               },
               icon: Container(
-                height: _iconSize,
-                width: _iconSize,
+                height: iconSize,
+                width: iconSize,
                 alignment: const Alignment(0, 0),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   image: DecorationImage(
                     image: AppImageAssets.flowerIcon,
                   ),

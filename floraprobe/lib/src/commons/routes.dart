@@ -25,19 +25,19 @@ Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
     case SettingsRoute:
       return wrapPageRoute<SettingsScreen>(
-        SettingsScreen(),
+        const SettingsScreen(),
         true,
       );
     case HistoryRoute:
       return wrapPageRoute<HistoryScreen>(
-        HistoryScreen(),
+        const HistoryScreen(),
         true,
       );
     case HomeRoute:
     default:
       return wrapPageRoute<HomeScreen>(
         // The main homescreen of this application
-        HomeScreen(
+        const HomeScreen(
           key: HomeRouteKey,
         ),
       );

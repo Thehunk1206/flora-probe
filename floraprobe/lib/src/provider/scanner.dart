@@ -24,9 +24,9 @@ class Scanner with ChangeNotifier {
 
   ScannerState get state => _viewState;
 
-  ImageProvider _latestSnappedImage;
+  ImageProvider? _latestSnappedImage;
 
-  ImageProvider get latestSnappedImage => _latestSnappedImage;
+  ImageProvider? get latestSnappedImage => _latestSnappedImage;
 
   final Probe probe;
 
@@ -35,7 +35,7 @@ class Scanner with ChangeNotifier {
   Future<void> setLatestSnappedImage(
       BuildContext context, ImageProvider image) async {
     _latestSnappedImage = image;
-    await precacheImage(_latestSnappedImage, context);
+    await precacheImage(image, context);
   }
 
   void setViewState(ScannerState viewState) {
@@ -50,14 +50,15 @@ class Scanner with ChangeNotifier {
   }
 
 // Dont forget to hide loading dialog
-  Future<List<dynamic>> scanImage(XFile imageFile, BuildContext context) async {
+  Future<List<dynamic>?> scanImage(
+      XFile imageFile, BuildContext context) async {
     // Starting theatrics
     try {
-      final io.File _imageFile = io.File(imageFile.path);
+      final io.File imageFile0 = io.File(imageFile.path);
       await setLatestSnappedImage(
         context,
         FileImage(
-          _imageFile,
+          imageFile0,
         ),
       );
       setViewState(ScannerState.running);
@@ -69,7 +70,7 @@ class Scanner with ChangeNotifier {
     }
 
     // Runs Model
-    List results = await probe.runModelFrom(imageFile.path);
+    List? results = await probe.runModelFrom(imageFile.path);
     setViewState(ScannerState.completed);
     return results;
   }

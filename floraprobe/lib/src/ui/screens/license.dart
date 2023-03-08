@@ -8,14 +8,13 @@ import 'package:floraprobe/src/ui/components/decorations/background_cover.dart';
 import 'package:floraprobe/src/ui/components/widgets/loading.dart';
 
 void showMyLicensePage({
-  @required BuildContext context,
-  String applicationName,
-  String applicationVersion,
-  Widget applicationIcon,
-  String applicationLegalese,
+  required BuildContext context,
+  String? applicationName,
+  String? applicationVersion,
+  Widget? applicationIcon,
+  String? applicationLegalese,
   bool useRootNavigator = false,
 }) {
-  assert(context != null);
   Navigator.of(context, rootNavigator: useRootNavigator)
       .push(MaterialPageRoute<void>(
     builder: (BuildContext context) => LicensePage(
@@ -37,25 +36,25 @@ class LicensePage extends StatefulWidget {
   /// The licenses shown on the [LicensePage] are those returned by the
   /// [LicenseRegistry] API, which can be used to add more licenses to the list.
   const LicensePage({
-    Key key,
+    super.key,
     this.applicationName,
     this.applicationVersion,
     this.applicationIcon,
     this.applicationLegalese,
-  }) : super(key: key);
+  });
 
   /// The name of the application.
   ///
   /// Defaults to the value of [Title.title], if a [Title] widget can be found.
   /// Otherwise, defaults to [Platform.resolvedExecutable].
-  final String applicationName;
+  final String? applicationName;
 
   /// The version of this build of the application.
   ///
   /// This string is shown under the application name.
   ///
   /// Defaults to the empty string.
-  final String applicationVersion;
+  final String? applicationVersion;
 
   /// The icon to show below the application name.
   ///
@@ -63,14 +62,14 @@ class LicensePage extends StatefulWidget {
   ///
   /// Typically this will be an [ImageIcon] widget. It should honor the
   /// [IconTheme]'s [IconThemeData.size].
-  final Widget applicationIcon;
+  final Widget? applicationIcon;
 
   /// A string to show in small print.
   ///
   /// Typically this is a copyright notice.
   ///
   /// Defaults to the empty string.
-  final String applicationLegalese;
+  final String? applicationLegalese;
 
   @override
   _LicensePageState createState() => _LicensePageState();
@@ -105,7 +104,7 @@ class _LicensePageState extends State<LicensePage> {
           Padding(
             padding: const EdgeInsets.only(top: 15.0),
             child: Container(
-              padding: EdgeInsets.all(4),
+              padding: const EdgeInsets.all(4),
               decoration: const BoxDecoration(
                 border: Border(
                   bottom: BorderSide(width: 1.0),
@@ -151,9 +150,9 @@ class _LicensePageState extends State<LicensePage> {
 
   @override
   Widget build(BuildContext context) {
-    final String name = widget.applicationName;
-    final String version = widget.applicationVersion;
-    final Widget icon = widget.applicationIcon;
+    final String? name = widget.applicationName;
+    final String? version = widget.applicationVersion;
+    final Widget? icon = widget.applicationIcon;
     final MaterialLocalizations localizations =
         MaterialLocalizations.of(context);
     return BackgroundCover(
@@ -162,7 +161,7 @@ class _LicensePageState extends State<LicensePage> {
         appBar: AppBar(
           leading: IconButton(
             onPressed: () => Navigator.of(context).maybePop(),
-            icon: Icon(EvaIcons.arrowIosBack),
+            icon: const Icon(EvaIcons.arrowIosBack),
           ),
           title: Text(localizations.licensesPageTitle),
           backgroundColor: AppColors.appbarColor,
@@ -173,7 +172,8 @@ class _LicensePageState extends State<LicensePage> {
           locale: const Locale('en', 'US'),
           context: context,
           child: DefaultTextStyle(
-            style: Theme.of(context).textTheme.caption,
+            style: Theme.of(context).textTheme.bodySmall ??
+                const TextStyle(fontSize: 10),
             child: SafeArea(
               bottom: false,
               child: Scrollbar(
@@ -181,8 +181,8 @@ class _LicensePageState extends State<LicensePage> {
                   padding: const EdgeInsets.symmetric(
                       horizontal: 8.0, vertical: 12.0),
                   children: <Widget>[
-                    Text(name,
-                        style: Theme.of(context).textTheme.headline5,
+                    Text(name ?? '-',
+                        style: Theme.of(context).textTheme.headlineSmall,
                         textAlign: TextAlign.center),
                     if (icon != null)
                       Center(
@@ -192,37 +192,39 @@ class _LicensePageState extends State<LicensePage> {
                       textAlign: TextAlign.center,
                       text: TextSpan(
                         text: 'version ',
-                        style: Theme.of(context).textTheme.bodyText2.copyWith(
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                             fontWeight: FontWeight.bold,
                             fontStyle: FontStyle.italic,
                             color: Colors.green),
                         children: [
                           TextSpan(
                             text: version,
-                            style:
-                                Theme.of(context).textTheme.bodyText2.copyWith(
-                                      fontStyle: FontStyle.italic,
-                                    ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(
+                                  fontStyle: FontStyle.italic,
+                                ),
                           ),
                         ],
                       ),
                     ),
-                    SizedBox(height: 9.0),
+                    const SizedBox(height: 9.0),
                     Padding(
                       padding: const EdgeInsets.only(top: 9.0),
                       child: Text(Strings.applicationLegalese ?? '',
-                          style: Theme.of(context).textTheme.caption,
+                          style: Theme.of(context).textTheme.bodySmall,
                           textAlign: TextAlign.center),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 9, top: 24),
                       child: Text(
                         'Powered by Flutter',
-                        style: Theme.of(context).textTheme.caption,
+                        style: Theme.of(context).textTheme.bodySmall,
                         textAlign: TextAlign.center,
                       ),
                     ),
-                    FlutterLogo(),
+                    const FlutterLogo(),
                     ..._licenses,
                     if (!_loaded)
                       const Padding(
