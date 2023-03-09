@@ -59,13 +59,11 @@ class Scanner extends StateNotifier<ScannerState> {
   final Probe probe;
 
   Future<void> setLatestSnappedImage(
-    BuildContext context,
     ImageProvider image,
   ) async {
     state = state.copyWith(
       latestSnappedImage: image,
     );
-    await precacheImage(image, context);
   }
 
   void updateStep(ScannerStateStep step) {
@@ -82,16 +80,16 @@ class Scanner extends StateNotifier<ScannerState> {
 
 // Dont forget to hide loading dialog
   Future<List<dynamic>?> scanImage(
-      XFile imageFile, BuildContext context) async {
+    XFile imageFile,
+    BuildContext context,
+  ) async {
     // Starting theatrics
     try {
-      final io.File imageFile0 = io.File(imageFile.path);
+      final FileImage fileImageProvider = FileImage(io.File(imageFile.path));
       await setLatestSnappedImage(
-        context,
-        FileImage(
-          imageFile0,
-        ),
+        fileImageProvider,
       );
+      if (context.mounted) await precacheImage(fileImageProvider, context);
       updateStep(ScannerStateStep.running);
     } catch (e) {
       print(e);

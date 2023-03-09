@@ -3,13 +3,8 @@ import 'package:flutter/services.dart' show SystemChrome, DeviceOrientation;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'src/commons/assets.dart';
-import 'src/controllers/camera_view.dart';
-import 'src/controllers/probe.dart';
-import 'src/provider/scanner.dart';
-import 'src/provider/settings.dart';
 import 'src/commons/string_const.dart';
 import 'src/commons/routes.dart';
-import 'src/provider/history.dart';
 
 void main() {
   // Ensuring that plugin services are initialized.

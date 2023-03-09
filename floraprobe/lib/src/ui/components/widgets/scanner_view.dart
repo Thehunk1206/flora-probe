@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'CameraView2.dart';
+import 'camera_view.dart';
 
 class ScannerView extends ConsumerWidget {
   const ScannerView({super.key});

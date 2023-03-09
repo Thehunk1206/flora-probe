@@ -1,4 +1,4 @@
-import 'package:floraprobe/src/ui/components/decorations/scannerSVG.dart';
+import 'package:floraprobe/src/ui/components/decorations/scanner_svg.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -19,18 +19,20 @@ class AppImageAssets {
 
   /// Preloads images before they are used in the app
   static Future<void> cacheMedia(BuildContext context) async {
-    await precacheImage(flowerBackground, context);
-    await precacheImage(flowerIcon, context);
-    await precacheImage(foundNothing, context);
-    await precacheImage(transparentImage, context);
+    await Future.wait([
+      precacheImage(flowerBackground, context),
+      precacheImage(flowerIcon, context),
+      precacheImage(foundNothing, context),
+      precacheImage(transparentImage, context),
+    ]);
   }
 }
 
 /// String path of models which will be used in application
 class ModelAssetPath {
   /// The main model which is used in tensor flow lite
-  static const flower_model = 'assets/models/flower_model_v1.tflite';
+  static const flowerModel = 'assets/models/flower_model_v1.tflite';
 
-  /// The labels used in [flower_model]
-  static const flower_labels = 'assets/models/label_flowers.txt';
+  /// The labels used in [flowerModel]
+  static const flowerLabels = 'assets/models/label_flowers.txt';
 }

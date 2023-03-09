@@ -13,8 +13,8 @@ class Probe {
     if (_loaded) return;
     // Loades our Tflite model
     _res = await Tflite.loadModel(
-        model: ModelAssetPath.flower_model,
-        labels: ModelAssetPath.flower_labels,
+        model: ModelAssetPath.flowerModel,
+        labels: ModelAssetPath.flowerLabels,
         numThreads: 2, // defaults to 1
         isAsset:
             true // defaults to true, set to false to load resources outside assets

@@ -12,7 +12,7 @@ import 'package:floraprobe/src/ui/components/buttons/iconlabel_button.dart';
 import 'package:floraprobe/src/commons/assets.dart';
 import 'package:floraprobe/src/commons/string_const.dart';
 import 'package:floraprobe/src/commons/styles.dart';
-import 'package:floraprobe/src/ui/components/widgets/bottomBar.dart';
+import 'package:floraprobe/src/ui/components/widgets/bottom_bar.dart';
 import 'package:floraprobe/src/ui/components/widgets/scanner_view.dart';
 
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
@@ -57,7 +57,7 @@ class HomeScreen extends ConsumerWidget {
     /// Buttons ===
     Widget historyButton = BouncingButton(
       icon: const FaIcon(
-        FontAwesomeIcons.history,
+        FontAwesomeIcons.clockRotateLeft,
         color: Colors.white,
       ),
       size: size,

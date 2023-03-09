@@ -71,8 +71,11 @@ class _CameraViewState extends ConsumerState<CameraView>
       await _acquireCamera(); // Try acquiring available cameras
     }
     print('Acquired camera');
-    controller = CameraController(cameras.first, ResolutionPreset.medium,
-        enableAudio: false);
+    controller = CameraController(
+      cameras.first,
+      ResolutionPreset.veryHigh,
+      enableAudio: false,
+    );
     await _initializeCamera();
   }
 
@@ -132,7 +135,7 @@ class _CameraViewState extends ConsumerState<CameraView>
       clipBehavior: Clip.hardEdge,
       borderRadius: Corners.borderRadius,
       child: AspectRatio(
-        aspectRatio: controller?.value.aspectRatio ?? 1.6,
+        aspectRatio: ref.watch(cameraViewAspectRatioProvider),
         child: CameraPreview(controller!),
       ),
     );

@@ -13,7 +13,9 @@ final cameraViewCameraControllerProvider = ChangeNotifierProvider((ref) {
 });
 
 final cameraViewAspectRatioProvider = Provider((ref) {
-  return ref.watch(cameraViewCameraControllerProvider.select(
+  final aspectRatio = ref.watch(cameraViewCameraControllerProvider.select(
     (value) => value?.value.aspectRatio ?? 2 / 3,
   ));
+  print('updated camera aspectRatio: $aspectRatio, ${1 / aspectRatio}');
+  return 1 / aspectRatio;
 });

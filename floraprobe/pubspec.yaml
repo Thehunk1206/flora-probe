@@ -30,7 +30,11 @@ dependencies:
   font_awesome_flutter: ^10.4.0
   google_fonts: ^4.0.3
   transparent_image: ^2.0.1
-  tflite: ^1.0.6
+  # tflite: ^1.0.6
+  tflite:
+    git:
+      url: https://github.com/St-Luciferr/flutter_tflite
+      ref: a1dc80c
   path: ^1.6.4
   path_provider: ^2.0.13
   flutter_bounce: ^1.0.8

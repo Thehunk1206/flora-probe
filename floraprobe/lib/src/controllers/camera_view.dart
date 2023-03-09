@@ -2,7 +2,6 @@ import 'package:camera/camera.dart';
 import 'package:floraprobe/src/controllers/scanner.dart';
 import 'package:floraprobe/src/ui/components/dialogs/loading_dialog.dart';
 import 'package:floraprobe/src/ui/components/dialogs/result_dialog.dart';
-import 'package:flutter/foundation.dart' show ChangeNotifier;
 import 'package:flutter/material.dart'
     show BuildContext, ScaffoldMessenger, SnackBar, Text;
 import 'package:flutter_riverpod/flutter_riverpod.dart';

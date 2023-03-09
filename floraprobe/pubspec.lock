@@ -688,10 +688,11 @@ packages:
   tflite:
     dependency: "direct main"
     description:
-      name: tflite
-      sha256: "661f8942a0e8ca05fedf554cc6f9cc95f526d0e4588d1665e0eb4d29e25e69b1"
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: a1dc80c
+      resolved-ref: a1dc80c3a447b3c625182be43a11b754130e890a
+      url: "https://github.com/St-Luciferr/flutter_tflite"
+    source: git
     version: "1.1.2"
   timing:
     dependency: transitive

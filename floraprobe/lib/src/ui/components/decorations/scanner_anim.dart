@@ -8,7 +8,7 @@ class ScannerAnimationWrap extends StatefulWidget {
   const ScannerAnimationWrap({super.key, required this.child});
 
   @override
-  _ScannerAnimationWrapState createState() => _ScannerAnimationWrapState();
+  State<ScannerAnimationWrap> createState() => _ScannerAnimationWrapState();
 }
 
 class _ScannerAnimationWrapState extends State<ScannerAnimationWrap>
