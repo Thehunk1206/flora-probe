@@ -212,7 +212,7 @@ class _LicensePageState extends State<LicensePage> {
                     const SizedBox(height: 9.0),
                     Padding(
                       padding: const EdgeInsets.only(top: 9.0),
-                      child: Text(Strings.applicationLegalese ?? '',
+                      child: Text(Strings.applicationLegalese,
                           style: Theme.of(context).textTheme.bodySmall,
                           textAlign: TextAlign.center),
                     ),

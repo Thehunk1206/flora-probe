@@ -1,3 +1,7 @@
-import 'package:flutter/foundation.dart' show ChangeNotifier;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class Settings with ChangeNotifier {}
+class Settings {}
+
+class SettingsController extends StateNotifier<Settings> {
+  SettingsController() : super(Settings());
+}

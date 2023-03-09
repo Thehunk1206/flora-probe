@@ -1,7 +1,8 @@
+import 'package:floraprobe/src/controllers/scanner.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 
 import 'package:floraprobe/src/commons/routing_const.dart';
 import 'package:floraprobe/src/provider/scanner.dart';
@@ -17,13 +18,13 @@ import 'package:floraprobe/src/ui/components/widgets/scanner_view.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 
 /// The main app screen of flora probe
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends ConsumerWidget {
   const HomeScreen({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     const double size = 40;
     Text appbarTitle = Text(
       Strings.title,
@@ -78,9 +79,9 @@ class HomeScreen extends StatelessWidget {
         size: size,
       ),
     );
-
-    final double scannerDecorationOpacity =
-        Provider.of<Scanner>(context).state == ScannerState.ready ? 1 : 0;
+    final double scannerDecorationOpacity = ref.watch(scannerProvider.select(
+      (value) => value.step == ScannerStateStep.ready ? 1 : 0,
+    ));
     const Duration opacityAnimationDuration = Duration(
       milliseconds: 200,
     );

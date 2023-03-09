@@ -1,3 +1,7 @@
-import 'package:flutter/foundation.dart' show ChangeNotifier;
+import 'package:floraprobe/src/controllers/history.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class History with ChangeNotifier {}
+final historyControllerProvider =
+    StateNotifierProvider<HistoryController, List<History>>((ref) {
+  return HistoryController();
+});

@@ -1,28 +1,27 @@
 import 'dart:async';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:floraprobe/src/commons/styles.dart';
+import 'package:floraprobe/src/controllers/camera_view.dart';
 import 'package:floraprobe/src/provider/camera_view.dart';
 import 'package:floraprobe/src/ui/components/widgets/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../dialogs/loading_dialog.dart';
 
-class CameraView extends StatefulWidget {
+class CameraView extends ConsumerStatefulWidget {
   final List<CameraDescription> cameras;
   const CameraView({super.key, this.cameras = const []});
   @override
   _CameraViewState createState() => _CameraViewState();
 }
 
-class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
+class _CameraViewState extends ConsumerState<CameraView>
+    with WidgetsBindingObserver {
   CameraController? controller;
   List<CameraDescription> cameras = [];
   final Loading loading = Loading();
-
-  /// HomeProvider with listen false
-  late CameraViewNotifier deafProvider;
 
   bool hasError = false;
   bool init = false;
@@ -31,7 +30,6 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    deafProvider = Provider.of<CameraViewNotifier>(context, listen: false);
     _setupCamera();
     init = false;
   }
@@ -95,7 +93,9 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
     }
     setState(() {});
     if (controller?.value.isInitialized ?? false) {
-      deafProvider.setCameraController(controller!);
+      ref
+          .read(cameraViewControllerProvider.notifier)
+          .setCameraController(controller!);
     }
   }
 

@@ -33,7 +33,7 @@ class ResultsDialog {
 
   Widget _buildOutput(List<dynamic> results) {
     Widget child;
-    if (results.isEmpty ?? true) {
+    if (results.isEmpty) {
       // No results
       child = Container(
         // Controls image size under constraints
